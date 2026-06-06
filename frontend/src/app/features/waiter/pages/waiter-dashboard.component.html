@@ -1,0 +1,228 @@
+<div class="min-h-screen bg-gray-100 flex flex-col">
+  <!-- Header -->
+  <header
+    class="bg-blue-600 px-4 md:px-8 py-3 flex items-center justify-between"
+  >
+    <div class="flex items-center gap-2">
+      <div
+        class="w-8 h-8 bg-white bg-opacity-20 rounded flex items-center justify-center"
+      >
+        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+          <path
+            d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z"
+          />
+        </svg>
+      </div>
+      <span class="text-white font-semibold text-lg">ClubMaster</span>
+    </div>
+
+    <div class="flex items-center gap-4">
+      <span class="text-blue-200 text-sm hidden sm:block"
+        >Waiter: {{ username }}</span
+      >
+      <button
+        (click)="logout()"
+        class="text-white text-sm font-medium hover:text-blue-200 transition-colors"
+      >
+        Logout
+      </button>
+    </div>
+  </header>
+
+  <button *ngIf="cart.length > 0"
+    (click)="showCart = !showCart"
+    class="fixed bottom-6 right-6 bg-blue-600 text-white rounded-full
+           w-16 h-16 shadow-lg flex items-center justify-center
+           font-bold text-lg z-50">
+{{ cart.length }}
+</button>
+
+<!-- Cart Panel -->
+<div *ngIf="showCart"
+     class="fixed bottom-0 right-0 w-full sm:w-96 bg-white shadow-2xl
+            rounded-t-2xl z-50 flex flex-col max-h-[70vh]">
+  <div class="px-6 py-4 border-b flex items-center justify-between">
+    <h2 class="font-bold text-lg text-gray-800">Current Order</h2>
+    <button (click)="showCart = false" class="text-gray-400 hover:text-gray-600">✕</button>
+  </div>
+  <div class="flex-1 overflow-y-auto px-6 py-4 space-y-3">
+    <div *ngFor="let item of cart"
+         class="flex items-center justify-between gap-3">
+      <div class="flex-1">
+        <p class="font-medium text-gray-800 text-sm">{{ item.name }}</p>
+        <p class="text-blue-600 text-sm">KES {{ item.price * item.quantity }}</p>
+      </div>
+      <div class="flex items-center gap-2">
+        <button type="button" (click)="updateQuantity(item.id, -1); $event.stopPropagation()"
+                class="w-8 h-8 bg-gray-100 rounded-full font-bold text-gray-600">−</button>
+        <span class="font-bold w-6 text-center">{{ item.quantity }}</span>
+        <button type="button" (click)="updateQuantity(item.id, 1); $event.stopPropagation()"
+                class="w-8 h-8 bg-gray-100 rounded-full font-bold text-gray-600">+</button>
+      </div>
+    </div>
+  </div>
+  <div class="px-6 py-4 border-t">
+    <div class="flex justify-between mb-4">
+      <span class="font-bold text-gray-800">Total</span>
+      <span class="font-bold text-blue-600">KES {{ cartTotal }}</span>
+    </div>
+    <button (click)="sendOrder()"
+            class="w-full bg-blue-600 hover:bg-blue-700 text-white
+                   font-semibold py-3 rounded-xl transition-colors">
+      Send to Kitchen
+    </button>
+  </div>
+</div>
+
+  <!-- Layout: Side Nav + Main Content -->
+  <div class="flex flex-1 overflow-hidden">
+
+    <!-- Side Nav -->
+    <aside class="w-20 md:w-56 bg-white border-r border-gray-200 flex flex-col py-4 shrink-0">
+      <button (click)="switchView('menu')"
+              class="flex flex-col md:flex-row items-center gap-1 md:gap-3 px-3 md:px-6 py-4 mx-2 rounded-xl transition-colors"
+              [class.bg-blue-600]="activeView === 'menu'"
+              [class.text-white]="activeView === 'menu'"
+              [class.text-gray-600]="activeView !== 'menu'"
+              [class.hover:bg-gray-100]="activeView !== 'menu'">
+        <svg class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12l10 10L22 12C22 6.48 17.52 2 12 2zm0 2c2.34 0 4.47.87 6.08 2.28L12 21 5.92 6.28C7.53 4.87 9.66 4 12 4zm0 5c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1zm-3 3c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1zm6 0c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"/>
+        </svg>
+        <span class="text-xs md:text-sm font-medium hidden md:block">Menu</span>
+        <span class="text-[10px] font-medium md:hidden">Menu</span>
+      </button>
+
+      <button (click)="switchView('orders')"
+              class="flex flex-col md:flex-row items-center gap-1 md:gap-3 px-3 md:px-6 py-4 mx-2 rounded-xl transition-colors relative"
+              [class.bg-blue-600]="activeView === 'orders'"
+              [class.text-white]="activeView === 'orders'"
+              [class.text-gray-600]="activeView !== 'orders'"
+              [class.hover:bg-gray-100]="activeView !== 'orders'">
+        <svg class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM7 10h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"/>
+        </svg>
+        <span class="text-xs md:text-sm font-medium hidden md:block">My Orders</span>
+        <span class="text-[10px] font-medium md:hidden">Orders</span>
+        <span *ngIf="orders.length > 0"
+              class="absolute top-2 right-2 md:static md:ml-auto bg-red-500 text-white text-xs font-bold
+                     w-5 h-5 rounded-full flex items-center justify-center">
+          {{ orders.length }}
+        </span>
+      </button>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col overflow-y-auto">
+
+      <!-- Page Title -->
+      <div class="bg-white px-4 md:px-8 py-4 border-b border-gray-200">
+        <h1 class="text-gray-800 font-bold text-xl md:text-2xl">
+          {{ activeView === 'menu' ? 'Food Menu' : 'My Orders' }}
+        </h1>
+        <p class="text-gray-500 text-sm mt-1">
+          {{ activeView === 'menu' ? 'Select items to add to an order' : 'Track your submitted orders' }}
+        </p>
+      </div>
+
+      <!-- Menu View -->
+      <div *ngIf="activeView === 'menu'" class="flex-1 flex flex-col">
+        <!-- Category Tabs -->
+        <div class="flex gap-2 px-4 md:px-8 py-3 bg-white border-b border-gray-200 overflow-x-auto">
+          <button (click)="selectCategory('all')"
+                  class="px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors"
+                  [class.bg-blue-600]="activeCategory === 'all'"
+                  [class.text-white]="activeCategory === 'all'"
+                  [class.bg-gray-100]="activeCategory !== 'all'"
+                  [class.text-gray-600]="activeCategory !== 'all'">
+            All
+          </button>
+          <button (click)="selectCategory('starters')"
+                  class="px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors"
+                  [class.bg-blue-600]="activeCategory === 'starters'"
+                  [class.text-white]="activeCategory === 'starters'"
+                  [class.bg-gray-100]="activeCategory !== 'starters'"
+                  [class.text-gray-600]="activeCategory !== 'starters'">
+            Starters
+          </button>
+          <button (click)="selectCategory('mains')"
+                  class="px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors"
+                  [class.bg-blue-600]="activeCategory === 'mains'"
+                  [class.text-white]="activeCategory === 'mains'"
+                  [class.bg-gray-100]="activeCategory !== 'mains'"
+                  [class.text-gray-600]="activeCategory !== 'mains'">
+            Mains
+          </button>
+          <button (click)="selectCategory('platters')"
+                  class="px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors"
+                  [class.bg-blue-600]="activeCategory === 'platters'"
+                  [class.text-white]="activeCategory === 'platters'"
+                  [class.bg-gray-100]="activeCategory !== 'platters'"
+                  [class.text-gray-600]="activeCategory !== 'platters'">
+            Platters
+          </button>
+        </div>
+
+        <!-- Food Grid -->
+        <div class="flex-1 p-4 md:p-8">
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+            <button *ngFor="let food of filteredFoods"
+                    (click)="addToOrder(food)"
+                    class="bg-white rounded-2xl shadow-md p-4 flex flex-col items-center gap-2
+                           hover:shadow-lg active:scale-95 transition-all cursor-pointer text-left">
+              <div class="w-full h-24 bg-gray-100 rounded-xl flex items-center justify-center">
+                <svg class="w-10 h-10 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12l10 10L22 12C22 6.48 17.52 2 12 2zm0 2c2.34 0 4.47.87 6.08 2.28L12 21 5.92 6.28C7.53 4.87 9.66 4 12 4zm0 5c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1zm-3 3c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1zm6 0c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"/>
+                </svg>
+              </div>
+              <span class="font-bold text-gray-800 text-sm text-center">{{ food.name }}</span>
+              <span class="text-blue-600 font-semibold text-sm">KES {{ food.price }}</span>
+              <span class="text-xs text-gray-400 capitalize">{{ food.category }}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Orders View -->
+      <div *ngIf="activeView === 'orders'" class="flex-1 p-4 md:p-8">
+        <div *ngIf="orders.length === 0" class="text-center text-gray-400 py-12">
+          No orders yet
+        </div>
+
+        <div class="space-y-4">
+          <div *ngFor="let order of orders"
+               class="bg-white rounded-2xl shadow-md p-4">
+            <div class="flex items-center justify-between mb-3">
+              <span class="font-bold text-gray-800">Order #{{ order.id.slice(-4) }}</span>
+              <span class="text-xs font-medium capitalize px-3 py-1 rounded-full"
+                    [class.bg-yellow-100]="order.status === 'pending'"
+                    [class.text-yellow-700]="order.status === 'pending'"
+                    [class.bg-blue-100]="order.status === 'preparing'"
+                    [class.text-blue-700]="order.status === 'preparing'"
+                    [class.bg-green-100]="order.status === 'ready'"
+                    [class.text-green-700]="order.status === 'ready'"
+                    [class.bg-gray-100]="order.status === 'served'"
+                    [class.text-gray-700]="order.status === 'served'">
+                {{ order.status }}
+              </span>
+            </div>
+
+            <div class="space-y-1 mb-3">
+              <div *ngFor="let item of order.items"
+                   class="flex justify-between text-sm text-gray-600">
+                <span>{{ item.quantity }}x {{ item.name }}</span>
+                <span>KES {{ item.price * item.quantity }}</span>
+              </div>
+            </div>
+
+            <div class="flex justify-between border-t pt-3">
+              <span class="text-xs text-gray-400">{{ order.createdAt | date:'short' }}</span>
+              <span class="font-bold text-blue-600">KES {{ order.total }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+</div>
