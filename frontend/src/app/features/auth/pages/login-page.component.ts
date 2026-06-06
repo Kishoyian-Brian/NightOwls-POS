@@ -1,0 +1,35 @@
+import { CommonModule } from "@angular/common";
+import { Component } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import { Router, RouterLink } from "@angular/router";
+import { AuthService } from "../../../core/authentication/services/auth.service";
+
+@Component({
+  selector: 'app-login-page',
+  templateUrl: './login-page.component.html',
+  standalone: true,
+  imports: [CommonModule, FormsModule, RouterLink]
+})
+export class LoginPageComponent {
+  username = '';
+  password = '';
+  error = '';
+  showPassword = false;
+
+  constructor(private auth: AuthService, private router: Router) {}
+
+  onLogin(): void {
+    this.error = '';
+    if (!this.username || !this.password) {
+      this.error = 'Please enter username and password.';
+      return;
+    }
+    const success = this.auth.login(this.username, this.password);
+    if (success) {
+      const user = this.auth.getCurrentUser()!;
+      this.router.navigate(['/' + user.role]);
+    } else {
+      this.error = 'Invalid username or password.';
+    }
+  }
+}
