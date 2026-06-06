@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "JtoDJDKQDLo=",
+  "success": true,
+  "projectFilePath": "/home/brian/Dev/Night-Club-Pos/backend/backend.csproj",
+  "expectedPackageFiles": [
+    "/home/brian/.nuget/packages/microsoft.aspnetcore.openapi/10.0.7/microsoft.aspnetcore.openapi.10.0.7.nupkg.sha512",
+    "/home/brian/.nuget/packages/microsoft.openapi/2.0.0/microsoft.openapi.2.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
