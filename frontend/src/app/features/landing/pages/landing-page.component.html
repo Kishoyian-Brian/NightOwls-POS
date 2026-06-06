@@ -1,80 +1,132 @@
 <div class="min-h-screen bg-white flex flex-col">
-
   <!-- NAVBAR -->
-  <nav class="bg-blue-600 px-4 md:px-8 py-3 flex items-center justify-between">
+  <nav
+    class="bg-blue-600 px-4 md:px-8 py-3 flex items-center justify-between shrink-0"
+  >
     <div class="flex items-center gap-2">
-      <div class="w-8 h-8 bg-white bg-opacity-20 rounded flex items-center justify-center">
+      <div
+        class="w-8 h-8 bg-white bg-opacity-20 rounded flex items-center justify-center"
+      >
         <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z"/>
+          <path
+            d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z"
+          />
         </svg>
       </div>
-      <span class="text-white font-semibold text-base md:text-lg">ClubMaster</span>
+      <span class="text-white font-semibold text-base md:text-lg"
+        >ClubMaster</span
+      >
     </div>
 
-    <div class="flex items-center gap-4 md:gap-6">
-      <a routerLink="/login"
-         class="text-white text-sm font-medium hover:text-blue-200 transition-colors">
+    <div class="flex items-center gap-3 md:gap-6">
+      <a
+        routerLink="/login"
+        class="text-white text-sm font-medium hover:text-blue-200 transition-colors"
+      >
         Login
       </a>
-      <a routerLink="/forgot-password"
-         class="text-white text-sm font-medium hover:text-blue-200 transition-colors whitespace-nowrap">
+      <a
+        routerLink="/forgot-password"
+        class="text-white text-sm font-medium hover:text-blue-200 transition-colors whitespace-nowrap"
+      >
         Forgot Password?
       </a>
     </div>
   </nav>
 
   <!-- HERO BANNER -->
-  <div class="w-full h-40 sm:h-52 md:h-64 lg:h-72 overflow-hidden relative">
-    <img src="food-banner.png" alt="Food Banner" class="absolute inset-0 w-full h-full object-cover"/>
+  <div class="w-full shrink-0">
+    <img
+      src="food-banner.png"
+      alt="Food Banner"
+      class="w-full h-auto block max-h-40 sm:max-h-52 md:max-h-64 object-cover"
+    />
   </div>
 
   <!-- HEADING -->
-  <div class="bg-white py-4 text-center border-b border-gray-200">
-    <h2 class="text-gray-800 font-semibold text-base md:text-lg lg:text-xl">Best Seller</h2>
+  <div
+    class="bg-white py-3 md:py-4 text-center border-b border-gray-200 shrink-0"
+  >
+    <h2 class="text-gray-800 font-semibold text-base md:text-lg lg:text-xl">
+      Best Seller
+    </h2>
   </div>
 
   <!-- SERVICE CARDS -->
-  <div class="flex flex-col md:flex-row flex-1 gap-2 px-4 md:px-8 py-4">
-
+  <div
+    class="flex flex-col md:flex-row flex-1 gap-3 md:gap-4 px-4 md:px-8 py-4 min-h-0"
+  >
     <!-- Food Card -->
-    <div class="flex-1 min-h-56 [perspective:1000px]">
-      <div class="relative w-full h-full transition-transform duration-700 [transform-style:preserve-3d]"
-           [class.flipped]="activeCard === 'food'">
-
+    <div
+      class="w-full md:flex-1 [perspective:1000px] transition-all duration-500"
+      [class.h-44]="!activeCard"
+      [class.h-64]="activeCard === 'food'"
+      [class.h-80]="activeCard === 'drinks'"
+      [class.md:h-auto]="true"
+      [class.md:min-h-[28rem]]="true"
+    >
+      <div
+        class="relative w-full h-full transition-transform duration-700 card-inner"
+        [class.flipped]="activeCard === 'food'"
+      >
         <!-- Front -->
-        <div class="absolute inset-0 bg-gradient-to-b from-blue-800 to-blue-600
-                    flex flex-col items-center justify-center gap-4 md:gap-6
-                    py-12 md:py-0 [backface-visibility:hidden]">
-
+        <div
+          class="card-face absolute inset-0 bg-blue-600 flex flex-col items-center justify-center gap-3 md:gap-6 md:rounded-none"
+        >
           <!-- Normal state -->
           <ng-container *ngIf="activeCard !== 'drinks'">
-            <div class="flex flex-col items-center gap-4 cursor-pointer" (click)="selectCard('food')">
-              <svg class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 text-white"
-                   fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.48 2 12l10 10L22 12C22 6.48 17.52 2 12 2zm0 2c2.34 0 4.47.87 6.08 2.28L12 21 5.92 6.28C7.53 4.87 9.66 4 12 4zm0 5c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1zm-3 3c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1zm6 0c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"/>
+            <div
+              class="flex flex-col items-center gap-3 cursor-pointer px-4"
+              (click)="selectCard('food')"
+            >
+              <svg
+                class="w-14 h-14 sm:w-16 sm:h-16 md:w-24 md:h-24 lg:w-28 lg:h-28 text-white"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12l10 10L22 12C22 6.48 17.52 2 12 2zm0 2c2.34 0 4.47.87 6.08 2.28L12 21 5.92 6.28C7.53 4.87 9.66 4 12 4zm0 5c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1zm-3 3c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1zm6 0c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"
+                />
               </svg>
-              <span class="text-white font-bold text-xl md:text-2xl lg:text-3xl">Food Service</span>
+              <span
+                class="text-white font-bold text-lg sm:text-xl md:text-2xl lg:text-3xl"
+                >Food Service</span
+              >
             </div>
           </ng-container>
 
           <!-- PIN Keypad (shown when drinks card is active) -->
           <ng-container *ngIf="activeCard === 'drinks'">
-            <div class="grid grid-cols-3 gap-3 w-full max-w-xs px-6">
-              <button *ngFor="let d of ['1','2','3','4','5','6','7','8','9']"
-                      (click)="addDigit(d)"
-                      class="bg-white bg-opacity-20 hover:bg-opacity-40 active:scale-95 text-white font-bold text-2xl py-5 rounded-2xl transition-all">
+            <div
+              class="grid grid-cols-3 gap-2 sm:gap-3 w-full max-w-[240px] sm:max-w-xs px-3 sm:px-6"
+            >
+              <button
+                type="button"
+                *ngFor="let d of ['1', '2', '3', '4', '5', '6', '7', '8', '9']"
+                (click)="addDigit(d)"
+                class="bg-white bg-opacity-20 hover:bg-opacity-40 active:scale-95 text-white font-bold text-lg sm:text-2xl py-3 sm:py-5 rounded-xl sm: transition-all"
+              >
                 {{ d }}
               </button>
-              <button (click)="removeDigit()"
-                      class="bg-white bg-opacity-20 hover:bg-opacity-40 active:scale-95 text-white font-bold text-xl py-5 rounded-2xl transition-all">
+              <button
+                type="button"
+                (click)="removeDigit()"
+                class="bg-white bg-opacity-20 hover:bg-opacity-40 active:scale-95 text-white font-bold text-base sm:text-xl py-3 sm:py-5 rounded-xl sm:rounded-2xl transition-all"
+              >
                 ⌫
               </button>
-              <button (click)="addDigit('0')"
-                      class="bg-white bg-opacity-20 hover:bg-opacity-40 active:scale-95 text-white font-bold text-2xl py-5 rounded-2xl transition-all">
+              <button
+                type="button"
+                (click)="addDigit('0')"
+                class="bg-white bg-opacity-20 hover:bg-opacity-40 active:scale-95 text-white font-bold text-lg sm:text-2xl py-3 sm:py-5 rounded-xl sm:rounded-2xl transition-all"
+              >
                 0
               </button>
-              <button (click)="cancel()"
-                      class="bg-white bg-opacity-10 hover:bg-opacity-20 active:scale-95 text-blue-200 font-bold text-sm py-5 rounded-2xl transition-all">
+              <button
+                type="button"
+                (click)="cancel()"
+                class="bg-white bg-opacity-10 hover:bg-opacity-20 active:scale-95 text-blue-200 font-bold text-xs sm:text-sm py-3 sm:py-5 rounded-xl sm:rounded-2xl transition-all"
+              >
                 ✕
               </button>
             </div>
@@ -82,61 +134,103 @@
         </div>
 
         <!-- Back (PIN display) -->
-        <div class="absolute inset-0 bg-gradient-to-b from-blue-800 to-blue-600
-                    flex flex-col items-center justify-center gap-6
-                    [backface-visibility:hidden] [transform:rotateY(180deg)]">
-          <span class="text-white font-extrabold text-3xl md:text-4xl tracking-wide">Waiter Access</span>
-          <div class="flex gap-5 mt-2">
-            <span *ngFor="let i of [0,1,2,3]"
-                  class="text-6xl font-black transition-all duration-200"
-                  [class.text-white]="pin.length > i"
-                  [class.text-blue-400]="pin.length <= i">●</span>
+        <div
+          class="card-face card-back absolute inset-0 bg-gradient-to-b from-blue-800 to-blue-600 flex flex-col items-center justify-center gap-4 md:gap-6 rounded-2xl md:rounded-none"
+        >
+          <span
+            class="text-white font-extrabold text-2xl sm:text-3xl md:text-4xl tracking-wide"
+            >Waiter Access</span
+          >
+          <div class="flex gap-3 sm:gap-5">
+            <span
+              *ngFor="let i of [0, 1, 2, 3]"
+              class="text-4xl sm:text-5xl md:text-6xl font-black transition-all duration-200"
+              [class.text-white]="pin.length > i"
+              [class.text-blue-400]="pin.length <= i"
+              >●</span
+            >
           </div>
-          <p *ngIf="pinError" class="text-red-300 font-semibold">{{ pinError }}</p>
+          <p
+            *ngIf="pinError"
+            class="text-red-300 font-semibold text-sm px-4 text-center"
+          >
+            {{ pinError }}
+          </p>
         </div>
-
       </div>
     </div>
 
     <!-- Drinks Card -->
-    <div class="flex-1 min-h-56 [perspective:1000px]">
-      <div class="relative w-full h-full transition-transform duration-700 [transform-style:preserve-3d]"
-           [class.flipped]="activeCard === 'drinks'">
-
+    <div
+      class="w-full md:flex-1 [perspective:1000px] transition-all duration-500"
+      [class.h-44]="!activeCard"
+      [class.h-64]="activeCard === 'drinks'"
+      [class.h-80]="activeCard === 'food'"
+      [class.md:h-auto]="true"
+      [class.md:min-h-[28rem]]="true"
+    >
+      <div
+        class="relative w-full h-full transition-transform duration-700 card-inner"
+        [class.flipped]="activeCard === 'drinks'"
+      >
         <!-- Front -->
-        <div class="absolute inset-0 bg-gradient-to-b from-blue-800 to-blue-600
-                    flex flex-col items-center justify-center gap-4 md:gap-6
-                    py-12 md:py-0 [backface-visibility:hidden]">
-
+        <div
+          class="card-face absolute inset-0 bg-blue-600 flex flex-col items-center justify-center gap-3 md:gap-6  md:rounded-none"
+        >
           <!-- Normal state -->
           <ng-container *ngIf="activeCard !== 'food'">
-            <div class="flex flex-col items-center gap-4 cursor-pointer" (click)="selectCard('drinks')">
-              <svg class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 text-white"
-                   fill="currentColor" viewBox="0 0 24 24">
-                <path d="M18.45 2l-1.1 1.1C15.93 1.8 14.06 1 12 1s-3.93.8-5.35 2.1L5.55 2 4.14 3.41l1.1 1.1C3.8 6.07 3 7.94 3 10c0 4.08 3.05 7.44 7 7.93V20H8v2h8v-2h-2v-2.07c3.95-.49 7-3.85 7-7.93 0-2.06-.8-3.93-2.1-5.35l1.1-1.1L18.45 2zM12 16c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"/>
+            <div
+              class="flex flex-col items-center gap-3 cursor-pointer px-4"
+              (click)="selectCard('drinks')"
+            >
+              <svg
+                class="w-14 h-14 sm:w-16 sm:h-16 md:w-24 md:h-24 lg:w-28 lg:h-28 text-white"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M18.45 2l-1.1 1.1C15.93 1.8 14.06 1 12 1s-3.93.8-5.35 2.1L5.55 2 4.14 3.41l1.1 1.1C3.8 6.07 3 7.94 3 10c0 4.08 3.05 7.44 7 7.93V20H8v2h8v-2h-2v-2.07c3.95-.49 7-3.85 7-7.93 0-2.06-.8-3.93-2.1-5.35l1.1-1.1L18.45 2zM12 16c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"
+                />
               </svg>
-              <span class="text-white font-bold text-xl md:text-2xl lg:text-3xl">Drinks Service</span>
+              <span
+                class="text-white font-bold text-lg sm:text-xl md:text-2xl lg:text-3xl"
+                >Drinks Service</span
+              >
             </div>
           </ng-container>
 
           <!-- PIN Keypad (shown when food card is active) -->
           <ng-container *ngIf="activeCard === 'food'">
-            <div class="grid grid-cols-3 gap-3 w-full max-w-xs px-6">
-              <button *ngFor="let d of ['1','2','3','4','5','6','7','8','9']"
-                      (click)="addDigit(d)"
-                      class="bg-white bg-opacity-20 hover:bg-opacity-40 active:scale-95 text-white font-bold text-2xl py-5 rounded-2xl transition-all">
+            <div
+              class="grid grid-cols-3 gap-2 sm:gap-3 w-full max-w-[240px] sm:max-w-xs px-3 sm:px-6"
+            >
+              <button
+                type="button"
+                *ngFor="let d of ['1', '2', '3', '4', '5', '6', '7', '8', '9']"
+                (click)="addDigit(d)"
+                class="bg-white bg-opacity-20 hover:bg-opacity-40 active:scale-95 text-white font-bold text-lg sm:text-2xl py-3 sm:py-5 rounded-xl sm:rounded-2xl transition-all"
+              >
                 {{ d }}
               </button>
-              <button (click)="removeDigit()"
-                      class="bg-white bg-opacity-20 hover:bg-opacity-40 active:scale-95 text-white font-bold text-xl py-5 rounded-2xl transition-all">
+              <button
+                type="button"
+                (click)="removeDigit()"
+                class="bg-white bg-opacity-20 hover:bg-opacity-40 active:scale-95 text-white font-bold text-base sm:text-xl py-3 sm:py-5 rounded-xl sm:rounded-2xl transition-all"
+              >
                 ⌫
               </button>
-              <button (click)="addDigit('0')"
-                      class="bg-white bg-opacity-20 hover:bg-opacity-40 active:scale-95 text-white font-bold text-2xl py-5 rounded-2xl transition-all">
+              <button
+                type="button"
+                (click)="addDigit('0')"
+                class="bg-white bg-opacity-20 hover:bg-opacity-40 active:scale-95 text-white font-bold text-lg sm:text-2xl py-3 sm:py-5 rounded-xl sm:rounded-2xl transition-all"
+              >
                 0
               </button>
-              <button (click)="cancel()"
-                      class="bg-white bg-opacity-10 hover:bg-opacity-20 active:scale-95 text-blue-200 font-bold text-sm py-5 rounded-2xl transition-all">
+              <button
+                type="button"
+                (click)="cancel()"
+                class="bg-white bg-opacity-10 hover:bg-opacity-20 active:scale-95 text-blue-200 font-bold text-xs sm:text-sm py-3 sm:py-5 rounded-xl sm:rounded-2xl transition-all"
+              >
                 ✕
               </button>
             </div>
@@ -144,21 +238,30 @@
         </div>
 
         <!-- Back (PIN display) -->
-        <div class="absolute inset-0 bg-gradient-to-b from-blue-800 to-blue-600
-                    flex flex-col items-center justify-center gap-6
-                    [backface-visibility:hidden] [transform:rotateY(180deg)]">
-          <span class="text-white font-extrabold text-3xl md:text-4xl tracking-wide">Bar Access</span>
-          <div class="flex gap-5 mt-2">
-            <span *ngFor="let i of [0,1,2,3]"
-                  class="text-6xl font-black transition-all duration-200"
-                  [class.text-white]="pin.length > i"
-                  [class.text-blue-400]="pin.length <= i">●</span>
+        <div
+          class="card-face card-back absolute inset-0 bg-gradient-to-b from-blue-800 to-blue-600 flex flex-col items-center justify-center gap-4 md:gap-6 rounded-2xl md:rounded-none"
+        >
+          <span
+            class="text-white font-extrabold text-2xl sm:text-3xl md:text-4xl tracking-wide"
+            >Bar Access</span
+          >
+          <div class="flex gap-3 sm:gap-5">
+            <span
+              *ngFor="let i of [0, 1, 2, 3]"
+              class="text-4xl sm:text-5xl md:text-6xl font-black transition-all duration-200"
+              [class.text-white]="pin.length > i"
+              [class.text-blue-400]="pin.length <= i"
+              >●</span
+            >
           </div>
-          <p *ngIf="pinError" class="text-red-300 font-semibold">{{ pinError }}</p>
+          <p
+            *ngIf="pinError"
+            class="text-red-300 font-semibold text-sm px-4 text-center"
+          >
+            {{ pinError }}
+          </p>
         </div>
-
       </div>
     </div>
-
   </div>
 </div>

@@ -8,7 +8,12 @@ import { AuthService } from '../../../core/authentication/services/auth.service'
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './landing-page.component.html',
-  styles: [`.flipped { transform: rotateY(180deg); }`]
+  styles: [`
+    .flipped { transform: rotateY(180deg); }
+    .card-inner { transform-style: preserve-3d; }
+    .card-face { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+    .card-back { transform: rotateY(180deg); }
+  `]
 })
 export class LandingPageComponent {
   activeCard: 'food' | 'drinks' | null = null;
