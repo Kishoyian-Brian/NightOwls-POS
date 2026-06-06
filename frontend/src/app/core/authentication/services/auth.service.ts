@@ -21,10 +21,10 @@ export class AuthService{
     private seedUsers(){
         if(!localStorage.getItem(this.USER_KEY)){
             const users: AppUser[] = [
-                {username: 'waiter', password: 'waiter', role: 'waiter'},
-                {username: 'manager', password: 'manager', role: 'manager'},
-                {username: 'bar', password: 'bar', role: 'bar'},
-                {username: 'kitchen', password: 'kitchen', role: 'kitchen'},
+                {username: 'waiter', password: '1234', role: 'waiter'},
+                {username: 'manager', password: '0000', role: 'manager'},
+                {username: 'bar', password: '5678', role: 'bar'},
+                {username: 'kitchen', password: '9999', role: 'kitchen'},
             ];
             localStorage.setItem(this.USER_KEY, JSON.stringify(users));
         }
