@@ -1,5 +1,5 @@
 /** Roles that can sign in to the POS */
-export type LoginRole = 'waiter' | 'manager' | 'bar' | 'kitchen';
+export type LoginRole = 'waiter' | 'manager' | 'bar' | 'kitchen' | 'store';
 
 /** On-site staff tracked as employee records (no system login) */
 export type RecordOnlyRole = 'cook' | 'bouncer' | 'security' | 'janitor';
@@ -24,6 +24,7 @@ export const STAFF_ROLE_LABELS: Record<StaffRole, string> = {
     manager: 'Manager',
     bar: 'Bartender',
     kitchen: 'Kitchen',
+    store: 'Store Keeper',
     cook: 'Cook',
     bouncer: 'Bouncer',
     security: 'Security',

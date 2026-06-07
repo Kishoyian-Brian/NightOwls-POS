@@ -48,6 +48,14 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'store',
+    canActivate: [roleGuard(['store'])],
+    loadComponent: () =>
+      import('./features/store/pages/store-dashboard.component').then(
+        (m) => m.StoreDashboardComponent,
+      ),
+  },
+  {
     path: 'manager',
     canActivate: [roleGuard(['manager'])],
     loadComponent: () =>

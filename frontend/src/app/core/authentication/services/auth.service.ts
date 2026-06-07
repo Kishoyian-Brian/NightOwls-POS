@@ -21,6 +21,7 @@ export class AuthService {
                 { username: 'manager', password: '0000', role: 'manager' },
                 { username: 'bar', password: '5678', role: 'bar' },
                 { username: 'kitchen', password: '9999', role: 'kitchen' },
+                { username: 'store', password: '3333', role: 'store' },
             ] satisfies AppUser[]));
         }
     }
@@ -39,6 +40,11 @@ export class AuthService {
 
         if (!synced.some(u => u.role === 'kitchen')) {
             synced.push({ username: 'kitchen', password: '9999', role: 'kitchen' });
+            changed = true;
+        }
+
+        if (!synced.some(u => u.role === 'store')) {
+            synced.push({ username: 'store', password: '3333', role: 'store' });
             changed = true;
         }
 
@@ -108,6 +114,10 @@ export class AuthService {
 
     isKitchen(): boolean {
         return this.getCurrentUser()?.role === 'kitchen';
+    }
+
+    isStore(): boolean {
+        return this.getCurrentUser()?.role === 'store';
     }
 
     resetPassword(username: string, newPassword: string): boolean {

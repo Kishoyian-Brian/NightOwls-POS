@@ -4,7 +4,7 @@ import { AppUser, isLoginRole } from '../../../core/authentication/models/user.m
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-    private readonly PROTECTED = ['waiter', 'manager', 'bar', 'kitchen'];
+    private readonly PROTECTED = ['waiter', 'manager', 'bar', 'kitchen', 'store'];
 
     constructor(private auth: AuthService) {}
 

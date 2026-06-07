@@ -3,7 +3,7 @@
     <div>
       <h1 class="text-2xl font-bold text-gray-800">Employees</h1>
       <p class="text-gray-500 text-sm mt-1">
-        {{ users.length }} on staff · only waiter, bartender, kitchen &amp; manager can sign in
+        {{ users.length }} on staff · waiter, bartender, kitchen, store &amp; manager can sign in
       </p>
     </div>
     <button type="button" (click)="openAdd()"
@@ -13,8 +13,8 @@
   </div>
 
   <!-- POS staff -->
-  <p class="text-xs font-semibold text-gray-400 uppercase mb-2">Can sign in (waiter · bartender · kitchen · manager)</p>
-  <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+  <p class="text-xs font-semibold text-gray-400 uppercase mb-2">Can sign in (waiter · bartender · kitchen · store · manager)</p>
+  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-4">
     <div *ngFor="let role of loginRoles"
          class="bg-white rounded-xl shadow-sm p-3 text-center border border-gray-100">
       <p class="text-2xl font-bold text-indigo-600">{{ countByRole(role) }}</p>
@@ -74,6 +74,8 @@
                   [class.text-purple-700]="user.role === 'bar'"
                   [class.bg-orange-100]="user.role === 'kitchen'"
                   [class.text-orange-700]="user.role === 'kitchen'"
+                  [class.bg-teal-100]="user.role === 'store'"
+                  [class.text-teal-700]="user.role === 'store'"
                   [class.bg-indigo-100]="user.role === 'manager'"
                   [class.text-indigo-700]="user.role === 'manager'"
                   [class.bg-slate-100]="!canSignIn(user.role)"
@@ -116,7 +118,7 @@
       <div>
         <label class="text-xs font-semibold text-gray-500">Role</label>
         <select [(ngModel)]="form.role" class="w-full mt-1 px-3 py-2 border rounded-xl text-sm">
-          <optgroup label="Can sign in (waiter · bartender · kitchen)">
+          <optgroup label="Can sign in (waiter · bartender · kitchen · store)">
             <option *ngFor="let r of addLoginRoles" [value]="r">{{ roleLabel(r) }}</option>
           </optgroup>
           <optgroup label="Employee record only">

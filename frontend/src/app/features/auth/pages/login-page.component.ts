@@ -30,7 +30,7 @@ export class LoginPageComponent {
       const user = this.auth.getCurrentUser()!;
       this.router.navigate([this.auth.homeRouteFor(user.role as LoginRole)]);
     } else if (result === 'no-access') {
-      this.error = 'Only waiter, bartender, kitchen, and manager accounts can sign in.';
+      this.error = 'Only waiter, bartender, kitchen, store, and manager accounts can sign in.';
     } else {
       this.error = 'Invalid username or password.';
     }

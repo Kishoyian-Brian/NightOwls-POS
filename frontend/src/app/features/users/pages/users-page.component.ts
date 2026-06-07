@@ -26,7 +26,7 @@ export class UsersPageComponent implements OnInit {
   roleFilter: 'all' | StaffRole = 'all';
 
   /** Login-capable roles a manager may create (not manager — single admin account) */
-  addLoginRoles: LoginRole[] = ['waiter', 'bar', 'kitchen'];
+  addLoginRoles: LoginRole[] = ['waiter', 'bar', 'kitchen', 'store'];
 
   viewRoles: StaffRole[] = [...LOGIN_ROLES, ...RECORD_ONLY_ROLES];
 
@@ -72,6 +72,8 @@ export class UsersPageComponent implements OnInit {
     switch (role) {
       case 'kitchen':
         return 'Receives food orders from waiters at the kitchen station.';
+      case 'store':
+        return 'Receives market deliveries and distributes stock to kitchen, bar, and club.';
       case 'cook':
         return 'Prepares food in the kitchen — employee record only.';
       case 'bouncer':
