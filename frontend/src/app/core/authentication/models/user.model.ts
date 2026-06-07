@@ -12,8 +12,8 @@ export interface AppUser {
     role: StaffRole;
 }
 
-/** Only these four roles may sign in — all other staff are employee records only */
-export const LOGIN_ROLES: LoginRole[] = ['waiter', 'manager', 'bar', 'kitchen'];
+/** Only these roles may sign in — all other staff are employee records only */
+export const LOGIN_ROLES: LoginRole[] = ['waiter', 'manager', 'bar', 'kitchen', 'store'];
 
 export const RECORD_ONLY_ROLES: RecordOnlyRole[] = [
     'cook', 'bouncer', 'security', 'janitor',
