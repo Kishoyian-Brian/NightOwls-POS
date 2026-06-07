@@ -48,10 +48,11 @@ export class LandingPageComponent {
 
   submitPin(): void {
     const password = this.pin.join('');
-    const username = this.activeCard === 'food' ? 'waiter' : 'bar';
-    const success = this.auth.login(username, password);
+    const success = this.auth.login('waiter', password);
     if (success) {
-      this.router.navigate(['/' + this.auth.getCurrentUser()!.role]);
+      const menu = this.activeCard === 'drinks' ? 'drinks' : 'food';
+      sessionStorage.setItem('cm_waiter_menu', menu);
+      this.router.navigate(['/waiter'], { queryParams: { menu } });
     } else {
       this.pinError = 'Incorrect PIN';
       this.pin = [];

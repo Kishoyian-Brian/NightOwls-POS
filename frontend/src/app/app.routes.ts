@@ -29,4 +29,18 @@ export const routes: Routes = [
         (m) => m.WaiterDashboardComponent,
       ),
   },
+  {
+    path: 'kitchen',
+    loadComponent: () =>
+      import('./features/kitchen/pages/kitchen-dashboard.component').then(
+        (m) => m.KitchenDashboardComponent,
+      ),
+  },
+  {
+    path: 'bar',
+    loadComponent: () =>
+      import('./features/bar/pages/bar-dashboard.component').then(
+        (m) => m.BarDashboardComponent,
+      ),
+  },
 ];
