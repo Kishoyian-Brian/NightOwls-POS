@@ -1,48 +1,27 @@
 <div class="min-h-screen bg-gray-100 flex flex-col">
 
-  <!-- Header -->
-  <header class="bg-blue-600 px-4 md:px-8 py-3 flex items-center justify-between shrink-0">
+  <header class="bg-orange-600 px-4 md:px-8 py-3 flex items-center justify-between shrink-0">
     <div class="flex items-center gap-2">
       <div class="w-8 h-8 bg-white bg-opacity-20 rounded flex items-center justify-center">
         <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
           <path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z"/>
         </svg>
       </div>
-      <span class="text-white font-semibold text-lg">ClubMaster</span>
+      <span class="text-white font-semibold text-lg">Kitchen — Order Receiver</span>
     </div>
 
     <div class="flex items-center gap-4">
-      <span class="text-blue-200 text-sm hidden sm:block">Kitchen: {{ username }}</span>
+      <span class="text-orange-100 text-sm hidden sm:block">Kitchen: {{ username }}</span>
       <button (click)="logout()"
-              class="text-white text-sm font-medium hover:text-blue-200 transition-colors">
+              class="text-white text-sm font-medium hover:text-orange-100 transition-colors">
         Logout
       </button>
     </div>
   </header>
 
-  <!-- Layout: Side Nav + Main Content -->
   <div class="flex flex-1 overflow-hidden">
 
-    <!-- Side Nav -->
     <aside class="w-20 md:w-56 bg-white border-r border-gray-200 flex flex-col py-4 shrink-0">
-      <button (click)="selectFilter('all')"
-              class="flex flex-col md:flex-row items-center gap-1 md:gap-3 px-3 md:px-6 py-4 mx-2 rounded-xl transition-colors relative"
-              [class.bg-blue-600]="activeFilter === 'all'"
-              [class.text-white]="activeFilter === 'all'"
-              [class.text-gray-600]="activeFilter !== 'all'"
-              [class.hover:bg-gray-100]="activeFilter !== 'all'">
-        <svg class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM7 10h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"/>
-        </svg>
-        <span class="text-xs md:text-sm font-medium hidden md:block">All Active</span>
-        <span class="text-[10px] font-medium md:hidden">All</span>
-        <span *ngIf="countByFilter('all') > 0"
-              class="absolute top-2 right-2 md:static md:ml-auto bg-red-500 text-white text-xs font-bold
-                     w-5 h-5 rounded-full flex items-center justify-center">
-          {{ countByFilter('all') }}
-        </span>
-      </button>
-
       <button (click)="selectFilter('pending')"
               class="flex flex-col md:flex-row items-center gap-1 md:gap-3 px-3 md:px-6 py-4 mx-2 rounded-xl transition-colors relative"
               [class.bg-yellow-500]="activeFilter === 'pending'"
@@ -52,7 +31,7 @@
         <svg class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
         </svg>
-        <span class="text-xs md:text-sm font-medium hidden md:block">Pending</span>
+        <span class="text-xs md:text-sm font-medium hidden md:block">New from Waiters</span>
         <span class="text-[10px] font-medium md:hidden">New</span>
         <span *ngIf="countByFilter('pending') > 0"
               class="absolute top-2 right-2 md:static md:ml-auto bg-yellow-500 text-white text-xs font-bold
@@ -63,22 +42,34 @@
         </span>
       </button>
 
+      <button (click)="selectFilter('all')"
+              class="flex flex-col md:flex-row items-center gap-1 md:gap-3 px-3 md:px-6 py-4 mx-2 rounded-xl transition-colors relative"
+              [class.bg-orange-600]="activeFilter === 'all'"
+              [class.text-white]="activeFilter === 'all'"
+              [class.text-gray-600]="activeFilter !== 'all'"
+              [class.hover:bg-gray-100]="activeFilter !== 'all'">
+        <svg class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/>
+        </svg>
+        <span class="text-xs md:text-sm font-medium hidden md:block">All Active</span>
+        <span *ngIf="countByFilter('all') > 0"
+              class="absolute top-2 right-2 md:static md:ml-auto bg-red-500 text-white text-xs font-bold
+                     w-5 h-5 rounded-full flex items-center justify-center">
+          {{ countByFilter('all') }}
+        </span>
+      </button>
+
       <button (click)="selectFilter('preparing')"
               class="flex flex-col md:flex-row items-center gap-1 md:gap-3 px-3 md:px-6 py-4 mx-2 rounded-xl transition-colors relative"
               [class.bg-blue-600]="activeFilter === 'preparing'"
               [class.text-white]="activeFilter === 'preparing'"
               [class.text-gray-600]="activeFilter !== 'preparing'"
               [class.hover:bg-gray-100]="activeFilter !== 'preparing'">
-        <svg class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-        </svg>
-        <span class="text-xs md:text-sm font-medium hidden md:block">Preparing</span>
-        <span class="text-[10px] font-medium md:hidden">Prep</span>
+        <span class="text-xs md:text-sm font-medium hidden md:block">With Cooks</span>
+        <span class="text-[10px] font-medium md:hidden">Cooking</span>
         <span *ngIf="countByFilter('preparing') > 0"
               class="absolute top-2 right-2 md:static md:ml-auto bg-blue-500 text-white text-xs font-bold
-                     w-5 h-5 rounded-full flex items-center justify-center"
-              [class.bg-white]="activeFilter === 'preparing'"
-              [class.text-blue-600]="activeFilter === 'preparing'">
+                     w-5 h-5 rounded-full flex items-center justify-center">
           {{ countByFilter('preparing') }}
         </span>
       </button>
@@ -89,31 +80,21 @@
               [class.text-white]="activeFilter === 'ready'"
               [class.text-gray-600]="activeFilter !== 'ready'"
               [class.hover:bg-gray-100]="activeFilter !== 'ready'">
-        <svg class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-        </svg>
         <span class="text-xs md:text-sm font-medium hidden md:block">Ready</span>
-        <span class="text-[10px] font-medium md:hidden">Done</span>
         <span *ngIf="countByFilter('ready') > 0"
               class="absolute top-2 right-2 md:static md:ml-auto bg-green-500 text-white text-xs font-bold
-                     w-5 h-5 rounded-full flex items-center justify-center"
-              [class.bg-white]="activeFilter === 'ready'"
-              [class.text-green-600]="activeFilter === 'ready'">
+                     w-5 h-5 rounded-full flex items-center justify-center">
           {{ countByFilter('ready') }}
         </span>
       </button>
     </aside>
 
-    <!-- Main Content -->
     <main class="flex-1 flex flex-col overflow-y-auto">
-
-      <!-- Page Title -->
       <div class="bg-white px-4 md:px-8 py-4 border-b border-gray-200">
         <h1 class="text-gray-800 font-bold text-xl md:text-2xl">{{ filterLabel }}</h1>
-        <p class="text-gray-500 text-sm mt-1">Manage incoming food orders</p>
+        <p class="text-gray-500 text-sm mt-1">Receive food orders from waiters and send them to the cooks</p>
       </div>
 
-      <!-- Orders -->
       <div class="flex-1 p-4 md:p-8">
         <div *ngIf="filteredOrders.length === 0" class="text-center text-gray-400 py-12">
           No orders in this category
@@ -124,7 +105,13 @@
                class="bg-white rounded-2xl shadow-md p-4 flex flex-col gap-3">
 
             <div class="flex items-center justify-between">
-              <span class="font-bold text-gray-800">Order #{{ order.id.slice(-4) }}</span>
+              <div class="flex items-center gap-2">
+                <span class="font-bold text-gray-800">Order #{{ order.id.slice(-4) }}</span>
+                <span *ngIf="order.tableNumber"
+                      class="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-700">
+                  Table {{ order.tableNumber }}
+                </span>
+              </div>
               <span class="text-xs font-medium capitalize px-3 py-1 rounded-full"
                     [class.bg-yellow-100]="order.status === 'pending'"
                     [class.text-yellow-700]="order.status === 'pending'"
@@ -140,10 +127,6 @@
               Waiter: {{ order.createdBy }} · {{ order.createdAt | date:'short' }}
             </p>
 
-            <p *ngIf="order.type === 'mixed'" class="text-xs text-purple-600 font-medium">
-              Mixed order — food items only
-            </p>
-
             <div class="space-y-1 border-t border-b border-gray-100 py-3">
               <div *ngFor="let item of getFoodItems(order)"
                    class="flex justify-between text-sm text-gray-700">
@@ -153,11 +136,11 @@
             </div>
 
             <div class="flex items-center justify-between mt-auto">
-              <span class="font-bold text-blue-600">KES {{ getFoodTotal(order) }}</span>
+              <span class="font-bold text-orange-600">KES {{ getFoodTotal(order) }}</span>
               <button *ngIf="nextStatus(order) as next"
                       type="button"
                       (click)="updateStatus(order, next)"
-                      class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm
+                      class="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white text-sm
                              font-semibold rounded-xl transition-colors">
                 {{ actionLabel(order) }}
               </button>
@@ -165,8 +148,6 @@
           </div>
         </div>
       </div>
-
     </main>
   </div>
-
 </div>

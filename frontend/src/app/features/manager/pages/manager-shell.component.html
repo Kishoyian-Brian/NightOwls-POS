@@ -1,0 +1,37 @@
+<div class="min-h-screen bg-gray-100 flex flex-col">
+  <header class="bg-indigo-700 px-4 md:px-8 py-3 flex items-center justify-between shrink-0">
+    <div class="flex items-center gap-2">
+      <div class="w-8 h-8 bg-white bg-opacity-20 rounded flex items-center justify-center">
+        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
+        </svg>
+      </div>
+      <span class="text-white font-semibold text-lg">ClubMaster Manager</span>
+    </div>
+    <div class="flex items-center gap-4">
+      <span class="text-indigo-200 text-sm hidden sm:block">Manager: {{ username }}</span>
+      <button (click)="logout()" class="text-white text-sm font-medium hover:text-indigo-200 transition-colors">
+        Logout
+      </button>
+    </div>
+  </header>
+
+  <div class="flex flex-1 overflow-hidden">
+    <aside class="w-20 md:w-56 bg-white border-r border-gray-200 flex flex-col py-4 shrink-0 overflow-y-auto">
+      <a *ngFor="let item of navItems"
+         [routerLink]="item.path"
+         routerLinkActive="bg-indigo-600 text-white"
+         [routerLinkActiveOptions]="{ exact: item.path === '/manager' }"
+         class="flex flex-col md:flex-row items-center gap-1 md:gap-3 px-3 md:px-6 py-3 mx-2 rounded-xl transition-colors text-gray-600 hover:bg-gray-100">
+        <svg class="w-5 h-5 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+          <path [attr.d]="item.icon"/>
+        </svg>
+        <span class="text-[10px] md:text-sm font-medium text-center md:text-left">{{ item.label }}</span>
+      </a>
+    </aside>
+
+    <main class="flex-1 overflow-y-auto">
+      <router-outlet />
+    </main>
+  </div>
+</div>

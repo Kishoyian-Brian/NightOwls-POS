@@ -124,7 +124,13 @@
                class="bg-white rounded-2xl shadow-md p-4 flex flex-col gap-3">
 
             <div class="flex items-center justify-between">
-              <span class="font-bold text-gray-800">Order #{{ order.id.slice(-4) }}</span>
+              <div class="flex items-center gap-2">
+                <span class="font-bold text-gray-800">Order #{{ order.id.slice(-4) }}</span>
+                <span *ngIf="order.tableNumber"
+                      class="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-700">
+                  Table {{ order.tableNumber }}
+                </span>
+              </div>
               <span class="text-xs font-medium capitalize px-3 py-1 rounded-full"
                     [class.bg-yellow-100]="order.status === 'pending'"
                     [class.text-yellow-700]="order.status === 'pending'"

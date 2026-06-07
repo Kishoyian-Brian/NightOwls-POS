@@ -1,0 +1,43 @@
+<div class="p-4 md:p-8">
+  <div class="mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">Overview</h1>
+    <p class="text-gray-500 text-sm mt-1">{{ clubName }} — live snapshot</p>
+  </div>
+
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+    <div class="bg-white rounded-2xl shadow-md p-5">
+      <p class="text-xs font-semibold text-gray-400 uppercase">Today's Revenue</p>
+      <p class="text-2xl font-bold text-indigo-600 mt-1">{{ currency }} {{ todayRevenue }}</p>
+    </div>
+    <div class="bg-white rounded-2xl shadow-md p-5">
+      <p class="text-xs font-semibold text-gray-400 uppercase">Collected</p>
+      <p class="text-2xl font-bold text-green-600 mt-1">{{ currency }} {{ todayPaid }}</p>
+    </div>
+    <div class="bg-white rounded-2xl shadow-md p-5">
+      <p class="text-xs font-semibold text-gray-400 uppercase">Receipts Today</p>
+      <p class="text-2xl font-bold text-gray-800 mt-1">{{ todayOrders }}</p>
+    </div>
+    <div class="bg-white rounded-2xl shadow-md p-5">
+      <p class="text-xs font-semibold text-gray-400 uppercase">Open Orders</p>
+      <p class="text-2xl font-bold text-yellow-600 mt-1">{{ openOrders }}</p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div class="bg-white rounded-2xl shadow-md p-5">
+      <p class="text-sm font-semibold text-gray-700">Unpaid Receipts</p>
+      <p class="text-3xl font-bold text-orange-500 mt-2">{{ unpaidCount }}</p>
+      <p class="text-xs text-gray-400 mt-1">Awaiting payment collection</p>
+    </div>
+    <div class="bg-white rounded-2xl shadow-md p-5">
+      <p class="text-sm font-semibold text-gray-700">Occupied Tables</p>
+      <p class="text-3xl font-bold text-blue-600 mt-2">{{ occupiedTables }} / {{ tableCount }}</p>
+      <p class="text-xs text-gray-400 mt-1">Tables with open orders</p>
+    </div>
+    <div class="bg-white rounded-2xl shadow-md p-5">
+      <p class="text-sm font-semibold text-gray-700">Low Stock Items</p>
+      <p class="text-3xl font-bold text-red-500 mt-2">{{ lowStockCount }}</p>
+      <p class="text-xs text-gray-400 mt-1">Need restocking</p>
+    </div>
+  </div>
+</div>

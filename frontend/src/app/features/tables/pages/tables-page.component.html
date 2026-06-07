@@ -1,0 +1,37 @@
+<div class="p-4 md:p-8">
+  <div class="flex items-center justify-between mb-6">
+    <div>
+      <h1 class="text-2xl font-bold text-gray-800">Tables</h1>
+      <p class="text-gray-500 text-sm mt-1">Floor plan — {{ openOrders.length }} active</p>
+    </div>
+    <button type="button" (click)="refresh()"
+            class="px-4 py-2 bg-indigo-600 text-white text-sm font-semibold rounded-xl hover:bg-indigo-700">
+      Refresh
+    </button>
+  </div>
+
+  <div class="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-8 lg:grid-cols-10 gap-3">
+    <div *ngFor="let table of tables"
+         class="rounded-2xl p-4 text-center border-2 transition-all"
+         [class.bg-green-50]="table.status === 'free'"
+         [class.border-green-200]="table.status === 'free'"
+         [class.bg-orange-50]="table.status === 'occupied'"
+         [class.border-orange-300]="table.status === 'occupied'">
+      <p class="text-2xl font-bold"
+         [class.text-green-700]="table.status === 'free'"
+         [class.text-orange-700]="table.status === 'occupied'">
+        {{ table.number }}
+      </p>
+      <p class="text-[10px] font-semibold uppercase mt-1"
+         [class.text-green-600]="table.status === 'free'"
+         [class.text-orange-600]="table.status === 'occupied'">
+        {{ table.status }}
+      </p>
+      <ng-container *ngIf="getOrderForTable(table) as order">
+        <p class="text-[10px] text-gray-500 mt-2 truncate">#{{ order.id.slice(-4) }}</p>
+        <p class="text-[10px] text-gray-500 capitalize">{{ order.createdBy }}</p>
+        <p class="text-xs font-bold text-indigo-600 mt-1">KES {{ order.total }}</p>
+      </ng-container>
+    </div>
+  </div>
+</div>

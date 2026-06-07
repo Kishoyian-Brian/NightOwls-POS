@@ -67,6 +67,7 @@ export class OrderService {
             ...orders[index],
             receiptGenerated: true,
             receiptGeneratedAt: new Date().toISOString(),
+            paymentStatus: 'unpaid',
             updatedAt: new Date().toISOString(),
         };
         localStorage.setItem(this.ORDER_KEY, JSON.stringify(orders));

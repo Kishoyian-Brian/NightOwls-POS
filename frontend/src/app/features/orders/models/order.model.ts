@@ -15,6 +15,9 @@ export interface Order {
     status: 'pending' | 'preparing' | 'ready' | 'served';
     receiptGenerated?: boolean;
     receiptGeneratedAt?: string;
+    paymentStatus?: 'unpaid' | 'paid';
+    paymentMethod?: 'cash' | 'mpesa' | 'card';
+    paidAt?: string;
     createdAt: string;
     updatedAt: string;
     createdBy: string;

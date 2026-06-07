@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { roleGuard } from './core/authentication/guards/role.guard';
 
 export const routes: Routes = [
   {
@@ -24,6 +25,7 @@ export const routes: Routes = [
   },
   {
     path: 'waiter',
+    canActivate: [roleGuard(['waiter'])],
     loadComponent: () =>
       import('./features/waiter/pages/waiter-dashboard.component').then(
         (m) => m.WaiterDashboardComponent,
@@ -31,6 +33,7 @@ export const routes: Routes = [
   },
   {
     path: 'kitchen',
+    canActivate: [roleGuard(['kitchen'])],
     loadComponent: () =>
       import('./features/kitchen/pages/kitchen-dashboard.component').then(
         (m) => m.KitchenDashboardComponent,
@@ -38,9 +41,76 @@ export const routes: Routes = [
   },
   {
     path: 'bar',
+    canActivate: [roleGuard(['bar'])],
     loadComponent: () =>
       import('./features/bar/pages/bar-dashboard.component').then(
         (m) => m.BarDashboardComponent,
       ),
+  },
+  {
+    path: 'manager',
+    canActivate: [roleGuard(['manager'])],
+    loadComponent: () =>
+      import('./features/manager/pages/manager-shell.component').then(
+        (m) => m.ManagerShellComponent,
+      ),
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import('./features/manager/pages/manager-overview.component').then(
+            (m) => m.ManagerOverviewComponent,
+          ),
+      },
+      {
+        path: 'tables',
+        loadComponent: () =>
+          import('./features/tables/pages/tables-page.component').then(
+            (m) => m.TablesPageComponent,
+          ),
+      },
+      {
+        path: 'products',
+        loadComponent: () =>
+          import('./features/products/pages/products-page.component').then(
+            (m) => m.ProductsPageComponent,
+          ),
+      },
+      {
+        path: 'inventory',
+        loadComponent: () =>
+          import('./features/inventory/pages/inventory-page.component').then(
+            (m) => m.InventoryPageComponent,
+          ),
+      },
+      {
+        path: 'payments',
+        loadComponent: () =>
+          import('./features/payments/pages/payments-page.component').then(
+            (m) => m.PaymentsPageComponent,
+          ),
+      },
+      {
+        path: 'reports',
+        loadComponent: () =>
+          import('./features/reports/pages/reports-page.component').then(
+            (m) => m.ReportsPageComponent,
+          ),
+      },
+      {
+        path: 'users',
+        loadComponent: () =>
+          import('./features/users/pages/users-page.component').then(
+            (m) => m.UsersPageComponent,
+          ),
+      },
+      {
+        path: 'settings',
+        loadComponent: () =>
+          import('./features/settings/pages/settings-page.component').then(
+            (m) => m.SettingsPageComponent,
+          ),
+      },
+    ],
   },
 ];

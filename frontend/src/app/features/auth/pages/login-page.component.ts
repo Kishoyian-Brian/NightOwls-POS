@@ -3,6 +3,7 @@ import { Component } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { Router, RouterLink } from "@angular/router";
 import { AuthService } from "../../../core/authentication/services/auth.service";
+import { LoginRole } from "../../../core/authentication/models/user.model";
 
 @Component({
   selector: 'app-login-page',
@@ -24,10 +25,12 @@ export class LoginPageComponent {
       this.error = 'Please enter username and password.';
       return;
     }
-    const success = this.auth.login(this.username, this.password);
-    if (success) {
+    const result = this.auth.login(this.username, this.password);
+    if (result === 'ok') {
       const user = this.auth.getCurrentUser()!;
-      this.router.navigate(['/' + user.role]);
+      this.router.navigate([this.auth.homeRouteFor(user.role as LoginRole)]);
+    } else if (result === 'no-access') {
+      this.error = 'Only waiter, bartender, kitchen, and manager accounts can sign in.';
     } else {
       this.error = 'Invalid username or password.';
     }

@@ -5,6 +5,13 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../core/authentication/services/auth.service';
 import { OrderService } from '../../orders/services/order.service';
 import { OrderItem, Order } from '../../orders/models/order.model';
+import { OrderReceiptComponent } from '../../orders/components/order-receipt.component';
+import { TableService } from '../../tables/services/table.service';
+import { TablePickerComponent } from '../../tables/components/table-picker.component';
+import { ClubTable } from '../../tables/models/table.model';
+import { ProductService } from '../../products/services/product.service';
+import { SettingsService } from '../../settings/services/settings.service';
+import { Product } from '../../products/models/product.model';
 
 interface MenuItem {
   id: number;
@@ -17,7 +24,7 @@ interface MenuItem {
 @Component({
   selector: 'app-waiter-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, OrderReceiptComponent, TablePickerComponent],
   templateUrl: './waiter-dashboard.component.html'
 })
 export class WaiterDashboardComponent implements OnInit {
@@ -29,7 +36,10 @@ export class WaiterDashboardComponent implements OnInit {
   menuMode: 'food' | 'drinks' = 'food';
   activeOrderId: string | null = null;
   drinkSearchQuery = '';
+  receiptOrder: Order | null = null;
   orders: Order[] = [];
+  selectedTable: number | null = null;
+  tableError = '';
 
   searchKeyboardRows = [
     ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
@@ -37,28 +47,7 @@ export class WaiterDashboardComponent implements OnInit {
     ['Z', 'X', 'C', 'V', 'B', 'N', 'M'],
   ];
 
-  menuItems: MenuItem[] = [
-    { id: 1, name: 'Grilled Chicken', category: 'mains', price: 850, itemType: 'food' },
-    { id: 2, name: 'Beef Burger', category: 'mains', price: 650, itemType: 'food' },
-    { id: 3, name: 'Fish & Chips', category: 'mains', price: 750, itemType: 'food' },
-    { id: 4, name: 'Caesar Salad', category: 'starters', price: 450, itemType: 'food' },
-    { id: 5, name: 'Soup of the Day', category: 'starters', price: 300, itemType: 'food' },
-    { id: 6, name: 'Chocolate Cake', category: 'platters', price: 350, itemType: 'food' },
-    { id: 7, name: 'Ice Cream', category: 'platters', price: 250, itemType: 'food' },
-    { id: 8, name: 'Pizza Margherita', category: 'mains', price: 900, itemType: 'food' },
-    { id: 101, name: 'Mojito', category: 'cocktails', price: 600, itemType: 'drinks' },
-    { id: 102, name: 'Piña Colada', category: 'cocktails', price: 650, itemType: 'drinks' },
-    { id: 103, name: 'Long Island', category: 'cocktails', price: 800, itemType: 'drinks' },
-    { id: 104, name: 'Margarita', category: 'cocktails', price: 700, itemType: 'drinks' },
-    { id: 201, name: 'Tusker', category: 'beers', price: 350, itemType: 'drinks' },
-    { id: 202, name: 'Heineken', category: 'beers', price: 400, itemType: 'drinks' },
-    { id: 203, name: 'Guinness', category: 'beers', price: 450, itemType: 'drinks' },
-    { id: 301, name: 'Red Wine', category: 'wines', price: 500, itemType: 'drinks' },
-    { id: 302, name: 'White Wine', category: 'wines', price: 500, itemType: 'drinks' },
-    { id: 401, name: 'Coke', category: 'soft', price: 150, itemType: 'drinks' },
-    { id: 402, name: 'Water', category: 'soft', price: 100, itemType: 'drinks' },
-    { id: 403, name: 'Fresh Juice', category: 'soft', price: 250, itemType: 'drinks' },
-  ];
+  menuItems: MenuItem[] = [];
 
   foodCategories = ['all', 'starters', 'mains', 'platters'];
   drinkCategories = ['all', 'cocktails', 'beers', 'wines', 'soft'];
@@ -66,6 +55,9 @@ export class WaiterDashboardComponent implements OnInit {
   constructor(
     private auth: AuthService,
     private orderService: OrderService,
+    private tableService: TableService,
+    private productService: ProductService,
+    private settingsService: SettingsService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
@@ -77,6 +69,7 @@ export class WaiterDashboardComponent implements OnInit {
       return;
     }
     this.username = user.username;
+    this.loadMenu();
     this.setMenuMode(this.route.snapshot.queryParamMap.get('menu'));
     this.restoreActiveOrder();
     this.loadOrders();
@@ -133,6 +126,30 @@ export class WaiterDashboardComponent implements OnInit {
     return this.menuMode === 'food' ? 'Food Menu' : 'Drinks Menu';
   }
 
+  private loadMenu(): void {
+    this.menuItems = this.productService.getActiveProducts().map((p: Product) => ({
+      id: p.id,
+      name: p.name,
+      category: p.category,
+      price: p.price,
+      itemType: p.itemType,
+    }));
+  }
+
+  private deductStock(items: OrderItem[]): void {
+    if (!this.settingsService.getSettings().trackInventory) return;
+    this.productService.decrementStock(items.map(i => ({ id: i.id, quantity: i.quantity })));
+  }
+
+  get tables(): ClubTable[] {
+    return this.tableService.getTables();
+  }
+
+  onTableSelected(tableNumber: number): void {
+    this.selectedTable = tableNumber;
+    this.tableError = '';
+  }
+
   get sendButtonLabel(): string {
     if (this.activeOrderId) {
       return `Add to Order #${this.activeOrderId.slice(-4)}`;
@@ -184,6 +201,8 @@ export class WaiterDashboardComponent implements OnInit {
 
   startNewOrder(): void {
     this.setActiveOrder(null);
+    this.selectedTable = null;
+    this.tableError = '';
     this.cart = [];
     this.showCart = false;
   }
@@ -252,12 +271,22 @@ export class WaiterDashboardComponent implements OnInit {
         return;
       }
       alert(`Items added to Order #${this.activeOrderId.slice(-4)}`);
+      this.deductStock(this.cart);
       this.setActiveOrder(null);
     } else {
+      if (!this.selectedTable) {
+        this.tableError = 'Please select a table before sending.';
+        return;
+      }
+      if (this.tableService.isTableOccupied(this.selectedTable)) {
+        this.tableError = 'This table already has an open order.';
+        return;
+      }
+
       const now = new Date().toISOString();
       const order: Order = {
         id: Date.now().toString(),
-        tableNumber: 0,
+        tableNumber: this.selectedTable,
         items: [...this.cart],
         total: this.cartTotal,
         status: 'pending',
@@ -268,7 +297,10 @@ export class WaiterDashboardComponent implements OnInit {
         createdBy: this.username
       };
       this.orderService.saveOrder(order);
-      alert('Order sent successfully');
+      this.deductStock(this.cart);
+      alert(`Order sent to Table ${this.selectedTable}`);
+      this.selectedTable = null;
+      this.tableError = '';
     }
 
     this.cart = [];
@@ -286,8 +318,20 @@ export class WaiterDashboardComponent implements OnInit {
         this.setActiveOrder(null);
       }
       this.loadOrders();
-      alert('Receipt generated. Order is now closed.');
+      const updated = this.orderService.getOrderById(order.id);
+      if (updated) {
+        this.receiptOrder = updated;
+      }
     }
+  }
+
+  viewReceipt(order: Order): void {
+    if (!order.receiptGenerated) return;
+    this.receiptOrder = this.orderService.getOrderById(order.id) ?? order;
+  }
+
+  closeReceipt(): void {
+    this.receiptOrder = null;
   }
 
   logout(): void {
