@@ -37,3 +37,10 @@ export const STORE_LOCATION_LABELS: Record<StoreLocation, string> = {
 export const STORE_CATEGORIES = [
     'produce', 'meat', 'dry-goods', 'beverages', 'cleaning', 'supplies',
 ] as const;
+
+export interface StoreImportResult {
+    received: number;
+    created: number;
+    skipped: number;
+    errors: string[];
+}

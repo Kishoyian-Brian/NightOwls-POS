@@ -1,7 +1,7 @@
 <div class="min-h-screen bg-white flex flex-col">
   <!-- NAVBAR -->
   <nav
-    class="bg-blue-600 px-4 md:px-8 py-3 flex items-center justify-between shrink-0"
+    class="bg-teal-700 px-4 md:px-8 py-3 flex items-center justify-between shrink-0"
   >
     <div class="flex items-center gap-2">
       <div
@@ -21,13 +21,13 @@
     <div class="flex items-center gap-3 md:gap-6">
       <a
         routerLink="/login"
-        class="text-white text-sm font-medium hover:text-blue-200 transition-colors"
+        class="text-white text-sm font-medium hover:text-teal-100 transition-colors"
       >
         Login
       </a>
       <a
         routerLink="/forgot-password"
-        class="text-white text-sm font-medium hover:text-blue-200 transition-colors whitespace-nowrap"
+        class="text-white text-sm font-medium hover:text-teal-100 transition-colors whitespace-nowrap"
       >
         Forgot Password?
       </a>
@@ -71,7 +71,7 @@
       >
         <!-- Front -->
         <div
-          class="card-face absolute inset-0 bg-blue-600 flex flex-col items-center justify-center gap-3 md:gap-6 md:rounded-none"
+          class="card-face absolute inset-0 bg-teal-600 flex flex-col items-center justify-center gap-3 md:gap-6 md:rounded-none"
         >
           <!-- Normal state -->
           <ng-container *ngIf="activeCard !== 'drinks'">
@@ -125,7 +125,7 @@
               <button
                 type="button"
                 (click)="cancel()"
-                class="bg-white bg-opacity-10 hover:bg-opacity-20 active:scale-95 text-blue-200 font-bold text-xs sm:text-sm py-3 sm:py-5 rounded-xl sm:rounded-2xl transition-all"
+                class="bg-white bg-opacity-10 hover:bg-opacity-20 active:scale-95 text-teal-100 font-bold text-xs sm:text-sm py-3 sm:py-5 rounded-xl sm:rounded-2xl transition-all"
               >
                 ✕
               </button>
@@ -135,7 +135,7 @@
 
         <!-- Back (PIN display) -->
         <div
-          class="card-face card-back absolute inset-0 bg-gradient-to-b from-blue-800 to-blue-600 flex flex-col items-center justify-center gap-4 md:gap-6 rounded-2xl md:rounded-none"
+          class="card-face card-back absolute inset-0 bg-gradient-to-b from-teal-800 to-teal-700 flex flex-col items-center justify-center gap-4 md:gap-6 rounded-2xl md:rounded-none"
         >
           <span
             class="text-white font-extrabold text-2xl sm:text-3xl md:text-4xl tracking-wide"
@@ -146,7 +146,7 @@
               *ngFor="let i of [0, 1, 2, 3]"
               class="text-4xl sm:text-5xl md:text-6xl font-black transition-all duration-200"
               [class.text-white]="pin.length > i"
-              [class.text-blue-400]="pin.length <= i"
+              [class.text-teal-400]="pin.length <= i"
               >●</span
             >
           </div>
@@ -175,7 +175,7 @@
       >
         <!-- Front -->
         <div
-          class="card-face absolute inset-0 bg-blue-600 flex flex-col items-center justify-center gap-3 md:gap-6 md:rounded-none"
+          class="card-face absolute inset-0 bg-teal-600 flex flex-col items-center justify-center gap-3 md:gap-6 md:rounded-none"
         >
           <!-- Normal state -->
           <ng-container *ngIf="activeCard !== 'food'">
@@ -229,7 +229,7 @@
               <button
                 type="button"
                 (click)="cancel()"
-                class="bg-white bg-opacity-10 hover:bg-opacity-20 active:scale-95 text-blue-200 font-bold text-xs sm:text-sm py-3 sm:py-5 rounded-xl sm:rounded-2xl transition-all"
+                class="bg-white bg-opacity-10 hover:bg-opacity-20 active:scale-95 text-teal-100 font-bold text-xs sm:text-sm py-3 sm:py-5 rounded-xl sm:rounded-2xl transition-all"
               >
                 ✕
               </button>
@@ -239,7 +239,7 @@
 
         <!-- Back (PIN display) -->
         <div
-          class="card-face card-back absolute inset-0 bg-gradient-to-b from-blue-800 to-blue-600 flex flex-col items-center justify-center gap-4 md:gap-6 rounded-2xl md:rounded-none"
+          class="card-face card-back absolute inset-0 bg-gradient-to-b from-teal-800 to-teal-700 flex flex-col items-center justify-center gap-4 md:gap-6 rounded-2xl md:rounded-none"
         >
           <span
             class="text-white font-extrabold text-2xl sm:text-3xl md:text-4xl tracking-wide"
@@ -250,7 +250,7 @@
               *ngFor="let i of [0, 1, 2, 3]"
               class="text-4xl sm:text-5xl md:text-6xl font-black transition-all duration-200"
               [class.text-white]="pin.length > i"
-              [class.text-blue-400]="pin.length <= i"
+              [class.text-teal-400]="pin.length <= i"
               >●</span
             >
           </div>

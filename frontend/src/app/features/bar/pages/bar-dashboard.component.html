@@ -1,7 +1,7 @@
 <div class="min-h-screen bg-gray-100 flex flex-col">
 
   <!-- Header -->
-  <header class="bg-blue-600 px-4 md:px-8 py-3 flex items-center justify-between shrink-0">
+  <header class="bg-teal-700 px-4 md:px-8 py-3 flex items-center justify-between shrink-0">
     <div class="flex items-center gap-2">
       <div class="w-8 h-8 bg-white bg-opacity-20 rounded flex items-center justify-center">
         <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -12,9 +12,9 @@
     </div>
 
     <div class="flex items-center gap-4">
-      <span class="text-blue-200 text-sm hidden sm:block">Bar: {{ username }}</span>
+      <span class="text-teal-100 text-sm hidden sm:block">Bar: {{ username }}</span>
       <button (click)="logout()"
-              class="text-white text-sm font-medium hover:text-blue-200 transition-colors">
+              class="text-white text-sm font-medium hover:text-teal-100 transition-colors">
         Logout
       </button>
     </div>
@@ -27,7 +27,7 @@
     <aside class="w-20 md:w-56 bg-white border-r border-gray-200 flex flex-col py-4 shrink-0">
       <button (click)="selectFilter('all')"
               class="flex flex-col md:flex-row items-center gap-1 md:gap-3 px-3 md:px-6 py-4 mx-2 rounded-xl transition-colors relative"
-              [class.bg-blue-600]="activeFilter === 'all'"
+              [class.bg-teal-600]="activeFilter === 'all'"
               [class.text-white]="activeFilter === 'all'"
               [class.text-gray-600]="activeFilter !== 'all'"
               [class.hover:bg-gray-100]="activeFilter !== 'all'">
@@ -65,7 +65,7 @@
 
       <button (click)="selectFilter('preparing')"
               class="flex flex-col md:flex-row items-center gap-1 md:gap-3 px-3 md:px-6 py-4 mx-2 rounded-xl transition-colors relative"
-              [class.bg-blue-600]="activeFilter === 'preparing'"
+              [class.bg-teal-600]="activeFilter === 'preparing'"
               [class.text-white]="activeFilter === 'preparing'"
               [class.text-gray-600]="activeFilter !== 'preparing'"
               [class.hover:bg-gray-100]="activeFilter !== 'preparing'">
@@ -75,10 +75,10 @@
         <span class="text-xs md:text-sm font-medium hidden md:block">Preparing</span>
         <span class="text-[10px] font-medium md:hidden">Prep</span>
         <span *ngIf="countByFilter('preparing') > 0"
-              class="absolute top-2 right-2 md:static md:ml-auto bg-blue-500 text-white text-xs font-bold
+              class="absolute top-2 right-2 md:static md:ml-auto bg-teal-500 text-white text-xs font-bold
                      w-5 h-5 rounded-full flex items-center justify-center"
               [class.bg-white]="activeFilter === 'preparing'"
-              [class.text-blue-600]="activeFilter === 'preparing'">
+              [class.text-teal-600]="activeFilter === 'preparing'">
           {{ countByFilter('preparing') }}
         </span>
       </button>
@@ -134,8 +134,8 @@
               <span class="text-xs font-medium capitalize px-3 py-1 rounded-full"
                     [class.bg-yellow-100]="order.status === 'pending'"
                     [class.text-yellow-700]="order.status === 'pending'"
-                    [class.bg-blue-100]="order.status === 'preparing'"
-                    [class.text-blue-700]="order.status === 'preparing'"
+                    [class.bg-teal-100]="order.status === 'preparing'"
+                    [class.text-teal-700]="order.status === 'preparing'"
                     [class.bg-green-100]="order.status === 'ready'"
                     [class.text-green-700]="order.status === 'ready'">
                 {{ order.status }}
@@ -159,11 +159,11 @@
             </div>
 
             <div class="flex items-center justify-between mt-auto">
-              <span class="font-bold text-blue-600">KES {{ getDrinkTotal(order) }}</span>
+              <span class="font-bold text-teal-600">KES {{ getDrinkTotal(order) }}</span>
               <button *ngIf="nextStatus(order) as next"
                       type="button"
                       (click)="updateStatus(order, next)"
-                      class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm
+                      class="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white text-sm
                              font-semibold rounded-xl transition-colors">
                 {{ actionLabel(order) }}
               </button>

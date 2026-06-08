@@ -11,7 +11,7 @@
       <div *ngFor="let day of daily" class="flex-1 flex flex-col items-center gap-1 h-full">
         <span class="text-[10px] text-gray-500">KES {{ day.revenue }}</span>
         <div class="flex-1 w-full flex items-end">
-          <div class="w-full bg-indigo-500 rounded-t-lg transition-all min-h-[4px]"
+          <div class="w-full bg-teal-500 rounded-t-lg transition-all min-h-[4px]"
                [style.height]="barHeight(day.revenue)"></div>
         </div>
         <span class="text-[10px] text-gray-400 text-center leading-tight">{{ day.date }}</span>
@@ -27,7 +27,7 @@
       <div *ngFor="let item of topItems; let i = index"
            class="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
         <div class="flex items-center gap-3">
-          <span class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">
+          <span class="w-6 h-6 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">
             {{ i + 1 }}
           </span>
           <div>
@@ -35,7 +35,7 @@
             <p class="text-xs text-gray-400">{{ item.quantity }} sold</p>
           </div>
         </div>
-        <span class="text-sm font-semibold text-indigo-600">KES {{ item.revenue }}</span>
+        <span class="text-sm font-semibold text-teal-600">KES {{ item.revenue }}</span>
       </div>
     </div>
 

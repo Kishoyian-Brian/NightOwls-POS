@@ -8,7 +8,7 @@
     <div class="flex gap-2">
       <button type="button" (click)="setFilter('unpaid')"
               class="px-4 py-2 rounded-full text-sm font-medium transition-colors"
-              [class.bg-indigo-600]="filter === 'unpaid'"
+              [class.bg-teal-600]="filter === 'unpaid'"
               [class.text-white]="filter === 'unpaid'"
               [class.bg-gray-100]="filter !== 'unpaid'"
               [class.text-gray-600]="filter !== 'unpaid'">
@@ -16,7 +16,7 @@
       </button>
       <button type="button" (click)="setFilter('all')"
               class="px-4 py-2 rounded-full text-sm font-medium transition-colors"
-              [class.bg-indigo-600]="filter === 'all'"
+              [class.bg-teal-600]="filter === 'all'"
               [class.text-white]="filter === 'all'"
               [class.bg-gray-100]="filter !== 'all'"
               [class.text-gray-600]="filter !== 'all'">
@@ -59,7 +59,7 @@
         </p>
       </div>
       <div class="flex items-center gap-3">
-        <span class="font-bold text-indigo-600 text-lg">KES {{ order.total }}</span>
+        <span class="font-bold text-teal-600 text-lg">KES {{ order.total }}</span>
         <button *ngIf="order.paymentStatus !== 'paid'"
                 type="button"
                 (click)="collect(order)"

@@ -1,10 +1,13 @@
-    import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
     StoreItem,
     StoreLocation,
     StoreMovement,
+    StoreImportResult,
     STORE_LOCATION_LABELS,
+    STORE_CATEGORIES,
 } from '../models/store.model';
+import { StoreImportRow } from '../utils/store-import.util';
 
 const SEED: Omit<StoreItem, 'id'>[] = [
     { name: 'Tomatoes', category: 'produce', unit: 'kg', store: 20, kitchen: 5, bar: 0, club: 0 },
@@ -71,12 +74,18 @@ export class StoreService {
             .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
     }
 
-    receiveFromMarket(itemId: string, quantity: number, recordedBy: string, note?: string): boolean {
+    receiveFromMarket(
+        itemId: string,
+        quantity: number,
+        recordedBy: string,
+        note?: string,
+        to: StoreLocation = 'store',
+    ): boolean {
         if (quantity <= 0) return false;
         const item = this.getItemById(itemId);
         if (!item) return false;
 
-        item.store += quantity;
+        item[to] += quantity;
         this.saveItem(item);
         this.logMovement({
             itemId,
@@ -84,11 +93,49 @@ export class StoreService {
             type: 'receive',
             quantity,
             from: 'market',
-            to: 'store',
+            to,
             note,
             recordedBy,
         });
         return true;
+    }
+
+    findItemByName(name: string): StoreItem | undefined {
+        const key = name.trim().toLowerCase();
+        return this.getItems().find(i => i.name.trim().toLowerCase() === key);
+    }
+
+    importStockList(rows: StoreImportRow[], recordedBy: string, note?: string): StoreImportResult {
+        const result: StoreImportResult = { received: 0, created: 0, skipped: 0, errors: [] };
+
+        for (const row of rows) {
+            let item = this.findItemByName(row.name);
+
+            if (!item) {
+                item = this.addItem({
+                    name: row.name.trim(),
+                    category: row.category && (STORE_CATEGORIES as readonly string[]).includes(row.category)
+                        ? row.category
+                        : 'supplies',
+                    unit: row.unit?.trim() || 'units',
+                    store: 0,
+                    kitchen: 0,
+                    bar: 0,
+                    club: 0,
+                });
+                result.created++;
+            }
+
+            const destination = row.destination ?? (row.category === 'beverages' ? 'bar' : 'store');
+            if (this.receiveFromMarket(item.id, row.quantity, recordedBy, note, destination)) {
+                result.received++;
+            } else {
+                result.skipped++;
+                result.errors.push(`Could not receive ${row.name}`);
+            }
+        }
+
+        return result;
     }
 
     transfer(itemId: string, from: StoreLocation, to: StoreLocation, quantity: number, recordedBy: string, note?: string): boolean {

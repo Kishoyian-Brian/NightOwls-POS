@@ -1,5 +1,5 @@
 <div class="min-h-screen bg-gray-100 flex flex-col">
-  <header class="bg-indigo-700 px-4 md:px-8 py-3 flex items-center justify-between shrink-0">
+  <header class="bg-teal-700 px-4 md:px-8 py-3 flex items-center justify-between shrink-0">
     <div class="flex items-center gap-2">
       <div class="w-8 h-8 bg-white bg-opacity-20 rounded flex items-center justify-center">
         <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -9,8 +9,8 @@
       <span class="text-white font-semibold text-lg">ClubMaster Manager</span>
     </div>
     <div class="flex items-center gap-4">
-      <span class="text-indigo-200 text-sm hidden sm:block">Manager: {{ username }}</span>
-      <button (click)="logout()" class="text-white text-sm font-medium hover:text-indigo-200 transition-colors">
+      <span class="text-teal-100 text-sm hidden sm:block">Manager: {{ username }}</span>
+      <button (click)="logout()" class="text-white text-sm font-medium hover:text-teal-100 transition-colors">
         Logout
       </button>
     </div>
@@ -20,7 +20,7 @@
     <aside class="w-20 md:w-56 bg-white border-r border-gray-200 flex flex-col py-4 shrink-0 overflow-y-auto">
       <a *ngFor="let item of navItems"
          [routerLink]="item.path"
-         routerLinkActive="bg-indigo-600 text-white"
+         routerLinkActive="bg-teal-600 text-white"
          [routerLinkActiveOptions]="{ exact: item.path === '/manager' }"
          class="flex flex-col md:flex-row items-center gap-1 md:gap-3 px-3 md:px-6 py-3 mx-2 rounded-xl transition-colors text-gray-600 hover:bg-gray-100">
         <svg class="w-5 h-5 shrink-0" fill="currentColor" viewBox="0 0 24 24">

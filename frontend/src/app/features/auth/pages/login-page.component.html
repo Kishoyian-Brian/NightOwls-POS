@@ -3,7 +3,7 @@
   
       <!-- Logo -->
       <div class="flex flex-col items-center mb-8">
-        <div class="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center mb-3">
+        <div class="w-14 h-14 bg-teal-600 rounded-full flex items-center justify-center mb-3">
           <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
             <path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z"/>
           </svg>
@@ -26,7 +26,7 @@
             [(ngModel)]="username"
             name="username"
             placeholder="Enter username"
-            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
           />
         </div>
   
@@ -38,7 +38,7 @@
               [(ngModel)]="password"
               name="password"
               placeholder="Enter password"
-              class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 pr-10"
+              class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 pr-10"
             />
             <button type="button" (click)="showPassword = !showPassword"
               class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
@@ -53,13 +53,13 @@
         </div>
   
         <button type="submit"
-          class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-lg transition-colors">
+          class="w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold py-2.5 rounded-lg transition-colors">
           Sign In
         </button>
       </form>
   
       <div class="text-center mt-4">
-        <a routerLink="/forgot-password" class="text-sm text-blue-600 hover:underline">Forgot Password?</a>
+        <a routerLink="/forgot-password" class="text-sm text-teal-600 hover:underline">Forgot Password?</a>
       </div>
 
       <p class="text-xs text-gray-400 text-center mt-6 leading-relaxed">

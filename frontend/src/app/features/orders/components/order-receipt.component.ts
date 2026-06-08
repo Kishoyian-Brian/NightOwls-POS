@@ -60,7 +60,7 @@ import { Order } from '../models/order.model';
 
           <div class="flex justify-between items-center text-lg font-bold text-gray-900 mb-6">
             <span>Total</span>
-            <span class="text-blue-600">KES {{ order.total }}</span>
+            <span class="text-teal-600">KES {{ order.total }}</span>
           </div>
 
           <div class="text-center text-xs text-gray-400 border-t border-dashed border-gray-300 pt-4">
@@ -72,7 +72,7 @@ import { Order } from '../models/order.model';
         <!-- Screen-only actions -->
         <div class="receipt-screen-only px-6 py-4 border-t flex gap-3 shrink-0">
           <button type="button" (click)="print()"
-                  class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition-colors">
+                  class="flex-1 bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 rounded-xl transition-colors">
             Print Receipt
           </button>
           <button type="button" (click)="closed.emit()"

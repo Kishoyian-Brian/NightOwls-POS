@@ -5,7 +5,7 @@
       <p class="text-gray-500 text-sm mt-1">Floor plan — {{ openOrders.length }} active</p>
     </div>
     <button type="button" (click)="refresh()"
-            class="px-4 py-2 bg-indigo-600 text-white text-sm font-semibold rounded-xl hover:bg-indigo-700">
+            class="px-4 py-2 bg-teal-600 text-white text-sm font-semibold rounded-xl hover:bg-teal-700">
       Refresh
     </button>
   </div>
@@ -30,7 +30,7 @@
       <ng-container *ngIf="getOrderForTable(table) as order">
         <p class="text-[10px] text-gray-500 mt-2 truncate">#{{ order.id.slice(-4) }}</p>
         <p class="text-[10px] text-gray-500 capitalize">{{ order.createdBy }}</p>
-        <p class="text-xs font-bold text-indigo-600 mt-1">KES {{ order.total }}</p>
+        <p class="text-xs font-bold text-teal-600 mt-1">KES {{ order.total }}</p>
       </ng-container>
     </div>
   </div>

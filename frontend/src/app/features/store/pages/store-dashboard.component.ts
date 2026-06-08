@@ -11,6 +11,12 @@ import {
     STORE_CATEGORIES,
     STORE_LOCATION_LABELS,
 } from '../models/store.model';
+import {
+    StoreImportRow,
+    downloadStoreImportTemplate,
+    parseStoreCsv,
+    parseStoreExcel,
+} from '../utils/store-import.util';
 
 type StoreTab = 'stock' | 'receive' | 'transfer' | 'history';
 
@@ -34,6 +40,11 @@ export class StoreDashboardComponent implements OnInit {
   receiveItemId = '';
   receiveQty = 1;
   receiveNote = '';
+  importNote = '';
+  importPreview: StoreImportRow[] = [];
+  importParseErrors: string[] = [];
+  importFileName = '';
+  importSuccess = '';
 
   transferItemId = '';
   transferFrom: StoreLocation = 'store';
@@ -83,6 +94,7 @@ export class StoreDashboardComponent implements OnInit {
   setTab(tab: StoreTab): void {
     this.activeTab = tab;
     this.error = '';
+    this.importSuccess = '';
   }
 
   tabLabel(tab: StoreTab): string {
@@ -133,5 +145,90 @@ export class StoreDashboardComponent implements OnInit {
       return `Market → ${this.store.locationLabel(m.to)}`;
     }
     return `${this.store.locationLabel(m.from as StoreLocation)} → ${this.store.locationLabel(m.to)}`;
+  }
+
+  downloadTemplate(): void {
+    downloadStoreImportTemplate();
+  }
+
+  onImportFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (!file) return;
+
+    this.error = '';
+    this.importSuccess = '';
+    this.importFileName = file.name;
+    this.importPreview = [];
+    this.importParseErrors = [];
+
+    const ext = file.name.split('.').pop()?.toLowerCase() ?? '';
+
+    if (ext === 'csv') {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const parsed = parseStoreCsv(String(reader.result ?? ''));
+        this.importPreview = parsed.rows;
+        this.importParseErrors = parsed.errors;
+        if (!parsed.rows.length && !parsed.errors.length) {
+          this.error = 'No valid rows found in the file.';
+        }
+      };
+      reader.readAsText(file);
+    } else if (ext === 'xlsx' || ext === 'xls') {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const parsed = parseStoreExcel(reader.result as ArrayBuffer);
+        this.importPreview = parsed.rows;
+        this.importParseErrors = parsed.errors;
+        if (!parsed.rows.length && !parsed.errors.length) {
+          this.error = 'No valid rows found in the spreadsheet.';
+        }
+      };
+      reader.readAsArrayBuffer(file);
+    } else {
+      this.error = 'Please upload a CSV or Excel file (.csv, .xlsx, .xls).';
+    }
+
+    input.value = '';
+  }
+
+  applyImport(): void {
+    this.error = '';
+    this.importSuccess = '';
+    if (!this.importPreview.length) {
+      this.error = 'Upload a stock list first.';
+      return;
+    }
+
+    const result = this.store.importStockList(
+      this.importPreview,
+      this.username,
+      this.importNote.trim() || `Imported from ${this.importFileName}`,
+    );
+
+    if (result.received === 0) {
+      this.error = 'Import failed — no items were received.';
+      if (result.errors.length) this.importParseErrors = result.errors;
+      return;
+    }
+
+    this.importSuccess = `Imported ${result.received} item(s)` +
+      (result.created ? ` · ${result.created} new item(s) added` : '') +
+      (result.skipped ? ` · ${result.skipped} skipped` : '');
+
+    this.importPreview = [];
+    this.importParseErrors = result.errors;
+    this.importFileName = '';
+    this.importNote = '';
+    this.refresh();
+  }
+
+  clearImportPreview(): void {
+    this.importPreview = [];
+    this.importParseErrors = [];
+    this.importFileName = '';
+    this.importSuccess = '';
+    this.error = '';
   }
 }
